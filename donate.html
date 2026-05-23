@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Support Hon. Maxwell Changilwa Amugune's campaign for Kabiro Ward MCA 2027. Donate via M-Pesa, card, bank or PayPal." />
+  <title>Support the Campaign — Maxwell Changilwa Amugune | Kabiro Ward 2027</title>
+  <link rel="stylesheet" href="main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <style>
+
+    /* ── Page-specific hero ── */
+    .donate-hero-bg {
+      background: url('https://scontent.fnbo9-1.fna.fbcdn.net/v/t39.30808-6/701651340_122135621523035197_3253793607252547827_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=110&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeGswx0RSHTSavR-jvo7aWd-zOBnBOSZQHfM4GcE5JlAd5pIknd83n1gSfAKrCxGRY59xUjY5lIe2IiTHHih4RWV&_nc_ohc=JNUhpI8RFPoQ7kNvwEi4ijS&_nc_oc=AdoD-ajLa_IQyEc5M44iK_fV3xsO0V8xFSbUhfd9chmL23q1bdBMwk9iktaH_qBftVg&_nc_pt=5&_nc_zt=23&_nc_ht=scontent.fnbo9-1.fna&_nc_gid=xnu8ZEE1iK-kDJk8uFFexQ&_nc_ss=7b2a8&oh=00_Af7QT7gb7dp4QZzRI0J1Ykv1njxATcgjRyoD8_Z8Cd_qAQ&oe=6A16D754') center/cover no-repeat;
+    }
+
+    /* ── Main layout ── */
+    .donate-section { background: var(--charcoal); padding: 80px 0 100px; }
+
+    .donate-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ── Form card ── */
+    .donate-card {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 48px 44px;
+      position: relative;
+    }
+    .donate-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark, #a07d15), var(--gold), var(--gold-dark, #a07d15));
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .donate-card-title {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .donate-card-sub {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 40px;
+    }
+
+    /* ── Field label ── */
+    .f-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 10px;
+    }
+
+    /* ── Amount presets ── */
+    .amount-presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .amt-btn {
+      padding: 16px 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.09);
+      border-radius: var(--radius-md);
+      color: rgba(255,255,255,0.75);
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .amt-btn:hover { border-color: rgba(201,162,39,0.45); color: var(--white); }
+    .amt-btn.active {
+      border-color: var(--gold);
+      background: rgba(201,162,39,0.1);
+      color: var(--gold);
+    }
+
+    /* ── Custom amount ── */
+    .custom-wrap {
+      position: relative;
+      margin-bottom: 32px;
+    }
+    .custom-prefix {
+      position: absolute;
+      left: 16px; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--gold);
+      pointer-events: none;
+    }
+    .custom-input {
+      width: 100%;
+      padding: 15px 18px 15px 60px;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+    }
+    .custom-input::placeholder { color: rgba(255,255,255,0.2); }
+    .custom-input:focus { outline: none; border-color: var(--gold); background: rgba(201,162,39,0.04); }
+
+    /* ── Text inputs ── */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .field-full { margin-bottom: 14px; }
+    .f-input {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.09);
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      transition: all 0.2s ease;
+    }
+    .f-input::placeholder { color: rgba(255,255,255,0.22); }
+    .f-input:focus { outline: none; border-color: rgba(201,162,39,0.55); background: rgba(201,162,39,0.04); }
+
+    /* ── Donate button ── */
+    .donate-btn {
+      width: 100%;
+      margin-top: 8px;
+      padding: 18px 20px;
+      background: linear-gradient(135deg, #a07d15 0%, var(--gold) 50%, #a07d15 100%);
+      background-size: 200% auto;
+      border: none;
+      border-radius: var(--radius-md);
+      color: #0d1a0a;
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background-position 0.5s ease, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 8px 32px rgba(201,162,39,0.3);
+    }
+    .donate-btn:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 14px 40px rgba(201,162,39,0.45); }
+    .donate-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .secure-note {
+      text-align: center;
+      font-size: 0.74rem;
+      color: rgba(255,255,255,0.28);
+      margin-top: 12px;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar-card {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    /* M-Pesa card */
+    .mpesa-card {
+      background: linear-gradient(135deg, rgba(10,61,32,0.55), rgba(22,46,16,0.65));
+      border: 1px solid rgba(201,162,39,0.25);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .mpesa-heading {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .mpesa-sub { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 20px; line-height: 1.5; }
+
+    .mpesa-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin-bottom: 10px;
+    }
+    .mpesa-field-lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.38); margin-bottom: 2px; }
+    .mpesa-field-val { font-family: var(--font-heading); font-size: 1.4rem; color: var(--gold); letter-spacing: 0.1em; }
+    .copy-btn {
+      background: rgba(201,162,39,0.1);
+      border: 1px solid rgba(201,162,39,0.3);
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+    .copy-btn:hover { background: rgba(201,162,39,0.2); }
+
+    .mpesa-steps { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .mpesa-steps-lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); margin-bottom: 10px; }
+    .mpesa-step { display: flex; align-items: flex-start; gap: 10px; font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-bottom: 7px; line-height: 1.45; }
+    .step-num {
+      width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
+      background: rgba(201,162,39,0.12); border: 1px solid rgba(201,162,39,0.3); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem; font-weight: 700; color: var(--gold);
+    }
+
+    /* sidebar card content */
+    .s-card-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .s-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .s-link:last-child { border-bottom: none; padding-bottom: 0; }
+    .s-link:hover { color: var(--gold); padding-left: 4px; }
+    .s-link-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .s-link-label { flex: 1; font-weight: 500; }
+    .s-link-arrow { font-size: 0.75rem; color: rgba(255,255,255,0.25); }
+
+    /* Trust strip */
+    .trust-strip {
+      background: var(--charcoal-mid);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 52px 0;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .trust-icon { font-size: 1.7rem; margin-bottom: 8px; }
+    .trust-title { font-family: var(--font-heading); font-size: 0.95rem; color: var(--white); margin-bottom: 4px; }
+    .trust-desc { font-size: 0.76rem; color: rgba(255,255,255,0.35); }
+
+    /* CTA banner */
+    .cta-banner {
+      background: url('https://scontent.fnbo9-1.fna.fbcdn.net/v/t39.30808-6/701651340_122135621523035197_3253793607252547827_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=110&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeGswx0RSHTSavR-jvo7aWd-zOBnBOSZQHfM4GcE5JlAd5pIknd83n1gSfAKrCxGRY59xUjY5lIe2IiTHHih4RWV&_nc_ohc=JNUhpI8RFPoQ7kNvwEi4ijS&_nc_oc=AdoD-ajLa_IQyEc5M44iK_fV3xsO0V8xFSbUhfd9chmL23q1bdBMwk9iktaH_qBftVg&_nc_pt=5&_nc_zt=23&_nc_ht=scontent.fnbo9-1.fna&_nc_gid=xnu8ZEE1iK-kDJk8uFFexQ&_nc_ss=7b2a8&oh=00_Af7QT7gb7dp4QZzRI0J1Ykv1njxATcgjRyoD8_Z8Cd_qAQ&oe=6A16D754') center/cover no-repeat;
+      position: relative;
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(5,41,24,0.93) 0%, rgba(5,41,24,0.82) 100%);
+    }
+    .cta-banner-content { position: relative; z-index: 2; text-align: center; padding: 90px 0; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal-box {
+      background: var(--charcoal-mid);
+      border: 1px solid rgba(201,162,39,0.3);
+      border-radius: var(--radius-lg);
+      padding: 52px 44px;
+      max-width: 460px; width: 90%;
+      text-align: center;
+      transform: scale(0.88);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .modal-overlay.active .modal-box { transform: scale(1); }
+    .modal-emoji { font-size: 3rem; margin-bottom: 20px; display: block; }
+    .modal-title { font-family: var(--font-heading); font-size: 2.2rem; color: var(--white); margin-bottom: 10px; }
+    .modal-title span { color: var(--gold); }
+    .modal-text { font-size: 0.92rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 20px; }
+    .modal-ref {
+      background: rgba(201,162,39,0.07);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: var(--gold);
+      margin-bottom: 26px;
+      word-break: break-all;
+    }
+    .modal-close {
+      padding: 13px 36px;
+      background: var(--gold);
+      color: #0d1a0a;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-close:hover { opacity: 0.88; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 90px; left: 50%;
+      transform: translateX(-50%);
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      text-align: center;
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; }
+    .toast.success { background: #0a4f2a; color: #fff; border: 1px solid var(--gold); }
+    .toast.error   { background: #5c1a1a; color: #fff; border: 1px solid #c0392b; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .donate-grid { grid-template-columns: 1fr; }
+      .trust-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .amount-presets { grid-template-columns: repeat(2,1fr); }
+      .field-row { grid-template-columns: 1fr; }
+      .donate-card { padding: 32px 22px; }
+    }
+    @media (max-width: 480px) {
+      .trust-grid { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR (matches site) ===== -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">MC</div>
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">Maxwell Changilwa Amugune</span>
+        <span class="nav-logo-sub">MCA Aspirant · Kabiro Ward 2027</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="manifesto.html">Manifesto</a>
+      <a href="mjengo-workers.html">Mjengo</a>
+      <a href="projects.html">Projects</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="news.html">Merch</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="volunteer.html" class="btn btn-outline btn-sm">Volunteer</a>
+      <a href="donate.html" class="btn btn-primary btn-sm">Support Campaign</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="manifesto.html">Manifesto</a>
+  <a href="mjengo-workers.html">Mjengo Workers</a>
+  <a href="projects.html">Projects</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="news.html">Merch</a>
+  <a href="contact.html">Contact</a>
+  <div class="mobile-menu-cta">
+    <a href="volunteer.html" class="btn btn-outline">Volunteer</a>
+    <a href="donate.html" class="btn btn-primary">Support Campaign</a>
+  </div>
+</div>
+
+<!-- ===== PAGE HERO ===== -->
+<div class="page-hero">
+  <div class="page-hero-bg donate-hero-bg"></div>
+  <div class="container page-hero-content">
+    <p class="page-hero-label">Support the Movement</p>
+    <h1 class="page-hero-title">Support the <span>Campaign</span></h1>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Donate</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DONATE SECTION ===== -->
+<section class="donate-section">
+  <div class="container">
+    <div class="donate-grid">
+
+      <!-- LEFT: SIMPLE FORM -->
+      <div class="donate-card">
+        <h2 class="donate-card-title">Make a Contribution</h2>
+        <p class="donate-card-sub">Every shilling powers real change in Kabiro Ward. Pay by M-Pesa, card, bank or PayPal — secured by Paystack.</p>
+
+        <!-- Amount presets -->
+        <span class="f-label">Choose an Amount (KES)</span>
+        <div class="amount-presets" id="amountPresets">
+          <button class="amt-btn" data-val="200">KES 200</button>
+          <button class="amt-btn" data-val="500">KES 500</button>
+          <button class="amt-btn active" data-val="1000">KES 1,000</button>
+          <button class="amt-btn" data-val="2500">KES 2,500</button>
+          <button class="amt-btn" data-val="5000">KES 5,000</button>
+          <button class="amt-btn" data-val="10000">KES 10,000</button>
+        </div>
+
+        <!-- Custom amount -->
+        <div class="custom-wrap">
+          <span class="custom-prefix">KES</span>
+          <input class="custom-input" type="number" id="customAmt" placeholder="Or enter your own amount" min="50" />
+        </div>
+
+        <!-- Name -->
+        <span class="f-label">Your Name</span>
+        <div class="field-row">
+          <input class="f-input" type="text" id="firstName" placeholder="First name" />
+          <input class="f-input" type="text" id="lastName" placeholder="Last name" />
+        </div>
+
+        <!-- Email -->
+        <span class="f-label">Email Address</span>
+        <div class="field-full">
+          <input class="f-input" type="email" id="donorEmail" placeholder="you@example.com" />
+        </div>
+
+        <!-- Donate button -->
+        <button class="donate-btn" id="donateBtn">💚 Donate Now</button>
+
+        <div class="secure-note">🔒 Secured by Paystack · M-Pesa · Visa · Mastercard · Bank Transfer · PayPal</div>
+      </div>
+
+      <!-- RIGHT: SIDEBAR -->
+      <div>
+
+        <!-- M-Pesa Direct -->
+        <div class="mpesa-card">
+          <div class="mpesa-heading">📱 Lipa na M-Pesa Directly</div>
+          <div class="mpesa-sub">Changilwa 2027 Campaign Fund</div>
+
+          <div class="mpesa-field">
+            <div>
+              <div class="mpesa-field-lbl">Paybill Number</div>
+              <div class="mpesa-field-val">400200</div>
+            </div>
+            <button class="copy-btn" onclick="copyText('400200', this)">Copy</button>
+          </div>
+          <div class="mpesa-field">
+            <div>
+              <div class="mpesa-field-lbl">Account Number</div>
+              <div class="mpesa-field-val">1037575</div>
+            </div>
+            <button class="copy-btn" onclick="copyText('1037575', this)">Copy</button>
+          </div>
+
+          <div class="mpesa-steps">
+            <div class="mpesa-steps-lbl">How to Pay</div>
+            <div class="mpesa-step"><div class="step-num">1</div><span>M-Pesa → Lipa na M-Pesa → Pay Bill</span></div>
+            <div class="mpesa-step"><div class="step-num">2</div><span>Business No: <strong style="color:var(--gold)">400200</strong></span></div>
+            <div class="mpesa-step"><div class="step-num">3</div><span>Account No: <strong style="color:var(--gold)">1037575</strong></span></div>
+            <div class="mpesa-step"><div class="step-num">4</div><span>Enter amount, PIN and confirm</span></div>
+          </div>
+        </div>
+
+        <!-- Other ways to give -->
+        <div class="sidebar-card">
+          <div class="s-card-title">💳 Other Ways to Give</div>
+          <div class="s-link">
+            <span class="s-link-icon">🏦</span>
+            <div>
+              <div class="s-link-label">Bank Transfer</div>
+              <div style="font-size:0.76rem;color:rgba(255,255,255,0.35);margin-top:2px;">Available at checkout via Paystack</div>
+            </div>
+            <span class="s-link-arrow">→</span>
+          </div>
+          <div class="s-link">
+            <span class="s-link-icon">🅿️</span>
+            <div>
+              <div class="s-link-label">PayPal</div>
+              <div style="font-size:0.76rem;color:rgba(255,255,255,0.35);margin-top:2px;">Available at checkout via Paystack</div>
+            </div>
+            <span class="s-link-arrow">→</span>
+          </div>
+          <div class="s-link">
+            <span class="s-link-icon">💳</span>
+            <div>
+              <div class="s-link-label">Visa / Mastercard</div>
+              <div style="font-size:0.76rem;color:rgba(255,255,255,0.35);margin-top:2px;">Available at checkout via Paystack</div>
+            </div>
+            <span class="s-link-arrow">→</span>
+          </div>
+          <div class="s-link">
+            <span class="s-link-icon">💬</span>
+            <div>
+              <div class="s-link-label">WhatsApp Us</div>
+              <div style="font-size:0.76rem;color:rgba(255,255,255,0.35);margin-top:2px;">For large donations or bank details</div>
+            </div>
+            <span class="s-link-arrow">→</span>
+          </div>
+        </div>
+
+        <!-- Quote -->
+        <div style="padding:24px; background:rgba(201,162,39,0.07); border:1px solid rgba(201,162,39,0.2); border-radius:var(--radius-md);">
+          <p style="font-style:italic; font-size:0.88rem; color:rgba(255,255,255,0.65); line-height:1.8; margin-bottom:12px;">"You can support my vision for Kabiro through your prayers, encouragement, and kind donations."</p>
+          <p style="font-size:0.82rem; color:var(--gold); font-weight:700;">— Hon. Maxwell Changilwa Amugune</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST STRIP ===== -->
+<section class="trust-strip">
+  <div class="container">
+    <div class="trust-grid">
+      <div>
+        <div class="trust-icon">🔒</div>
+        <div class="trust-title">100% Secure</div>
+        <div class="trust-desc">Bank-grade encryption on every payment</div>
+      </div>
+      <div>
+        <div class="trust-icon">✅</div>
+        <div class="trust-title">Transparent</div>
+        <div class="trust-desc">Every shilling tracked and accounted for</div>
+      </div>
+      <div>
+        <div class="trust-icon">📱</div>
+        <div class="trust-title">M-Pesa & Cards</div>
+        <div class="trust-desc">Pay via M-Pesa, Visa, Mastercard, or bank</div>
+      </div>
+      <div>
+        <div class="trust-icon">📧</div>
+        <div class="trust-title">Receipt Sent</div>
+        <div class="trust-desc">Instant confirmation to your inbox</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA BANNER ===== -->
+<section class="cta-banner">
+  <div class="cta-banner-content">
+    <div class="section-label" style="margin-bottom:20px;">Other Ways to Help</div>
+    <h2 class="section-title" style="max-width:600px; margin:0 auto 16px;">Can't Donate? <span>Volunteer Instead</span></h2>
+    <p style="color:rgba(255,255,255,0.65); max-width:460px; margin:0 auto 36px; font-size:1rem;">Your time and energy are just as powerful. Join the Kabiro reset movement today.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="volunteer.html" class="btn btn-primary btn-lg">🤝 Volunteer Now</a>
+      <a href="contact.html" class="btn btn-outline btn-lg">📞 Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-badge">MC</div>
+            <div class="nav-logo-text">
+              <span class="nav-logo-name">Maxwell Changilwa Amugune</span>
+              <span class="nav-logo-sub">MCA Aspirant · Kabiro Ward 2027</span>
+            </div>
+          </div>
+          <p class="footer-desc">Here to Reset, Restore & Rebuild Kabiro — Bila Political Brokers. Fighting for security, healthcare, water, equal bursaries, and dignity for every resident.</p>
+          <div class="footer-social">
+            <a href="#" class="social-icon" title="Facebook">📘</a>
+            <a href="#" class="social-icon" title="Twitter/X">🐦</a>
+            <a href="#" class="social-icon" title="Instagram">📸</a>
+            <a href="https://wa.me/254700000000" class="social-icon" title="WhatsApp">💬</a>
+            <a href="#" class="social-icon" title="YouTube">▶️</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-heading">Quick Links</h4>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Maxwell</a>
+            <a href="manifesto.html">Manifesto</a>
+            <a href="mjengo-workers.html">Mjengo Workers</a>
+            <a href="projects.html">Projects</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-heading">Get Involved</h4>
+          <div class="footer-links">
+            <a href="volunteer.html">Volunteer</a>
+            <a href="donate.html">Donate</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="news.html">News & Updates</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📍</span>
+            <span>Kabiro Ward, Dagoretti North, Nairobi County</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <span>+254 700 000 000</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">✉️</span>
+            <span>info@changilwa2027.ke</span>
+          </div>
+          <h4 class="footer-heading" style="margin-top:24px;">Newsletter</h4>
+          <p style="font-size:0.82rem; color:rgba(255,255,255,0.4); margin-bottom:0;">Get campaign updates to your inbox.</p>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="Your email" required />
+            <button class="newsletter-btn" type="submit">Join</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="footer-bottom">
+      <p class="footer-bottom-text">© 2027 Maxwell Changilwa Amugune Campaign. All rights reserved. | Kabiro Ward, Dagoretti North, Nairobi</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/254700000000?text=Hello%20Maxwell%2C%20I%20want%20to%20support%20the%20campaign!" class="whatsapp-float" title="Chat on WhatsApp">💬</a>
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">↑</button>
+
+<!-- ===== SUCCESS MODAL ===== -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <span class="modal-emoji">🎉</span>
+    <h2 class="modal-title">Asante <span id="modalName">Sana!</span></h2>
+    <p class="modal-text" id="modalText">Your contribution has been received. A confirmation has been sent to your email. Together we build a better Kabiro!</p>
+    <div class="modal-ref" id="modalRef"></div>
+    <button class="modal-close" onclick="closeModal()">Done</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+/* ── Config ── Replace with your real Paystack public key ── */
+const PAYSTACK_KEY = 'pk_test_f8b6c22c4e23f9e0c1603e2ef34a27c2dc6be3e3';
+
+/* ── State ── */
+let selectedAmount = 1000;
+
+/* ── Preset buttons ── */
+document.querySelectorAll('.amt-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedAmount = parseInt(btn.dataset.val);
+    document.getElementById('customAmt').value = '';
+  });
+});
+
+/* ── Custom amount ── */
+document.getElementById('customAmt').addEventListener('input', e => {
+  document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('active'));
+  selectedAmount = parseFloat(e.target.value) || 0;
+});
+
+/* ── Donate button ── */
+document.getElementById('donateBtn').addEventListener('click', () => {
+  const first = document.getElementById('firstName').value.trim();
+  const last  = document.getElementById('lastName').value.trim();
+  const email = document.getElementById('donorEmail').value.trim();
+
+  if (!first || !last)                return toast('Please enter your full name.', 'error');
+  if (!email || !email.includes('@')) return toast('Please enter a valid email address.', 'error');
+  if (!selectedAmount || selectedAmount < 50)
+                                       return toast('Minimum donation is KES 50.', 'error');
+
+  const fullName  = `${first} ${last}`;
+  const reference = `KABIRO-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;
+
+  const handler = PaystackPop.setup({
+    key:      PAYSTACK_KEY,
+    email:    email,
+    amount:   Math.round(selectedAmount * 100), /* Paystack uses kobo/cents */
+    currency: 'KES',
+    ref:      reference,
+    label:    'Kabiro Ward 2027 Campaign',
+    metadata: {
+      custom_fields: [
+        { display_name: 'Donor Name', variable_name: 'donor_name', value: fullName },
+        { display_name: 'Campaign',   variable_name: 'campaign',   value: 'Maxwell Changilwa — Kabiro Ward 2027' },
+      ],
+    },
+    channels: ['card', 'bank', 'ussd', 'qr', 'mobile_money', 'bank_transfer', 'paypal'],
+    callback: (response) => {
+      document.getElementById('modalName').textContent = first + '!';
+      document.getElementById('modalText').textContent =
+        `Your KES ${selectedAmount.toLocaleString()} donation has been received and a confirmation sent to ${email}. Asante sana — together we Reset, Restore & Rebuild Kabiro!`;
+      document.getElementById('modalRef').textContent = `Reference: ${response.reference}`;
+      document.getElementById('successModal').classList.add('active');
+    },
+    onClose: () => toast('Payment window closed. You can try again anytime.', 'error'),
+  });
+
+  handler.openIframe();
+});
+
+/* ── Modal ── */
+function closeModal() { document.getElementById('successModal').classList.remove('active'); }
+document.getElementById('successModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+/* ── Copy helper ── */
+function copyText(txt, btn) {
+  navigator.clipboard.writeText(txt).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = orig; }, 1800);
+  });
+}
+
+/* ── Toast ── */
+function toast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast ${type} show`;
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+/* ── Scroll top ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+});
+document.getElementById('scrollTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ── Mobile nav ── */
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+</script>
+</body>
+</html>

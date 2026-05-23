@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Failed Projects & Our Agenda — Maxwell Changilwa Amugune | Kabiro Ward 2027</title>
+  <link rel="stylesheet" href="main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <style>
+    .projects-hero-bg { background: url('https://businesstoday.co.ke/wp-content/uploads/2021/06/industrialize.jpg') center/cover; }
+
+    /* Filter tabs */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+
+    /* Project Card */
+    .project-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(201,162,39,0.4);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .project-card-img {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+    .project-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+    .project-card:hover .project-card-img img { transform: scale(1.08); }
+    .project-status {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .status-planned   { background: rgba(201,162,39,0.85); color: #1a1a1a; }
+    .status-ongoing   { background: rgba(26,128,72,0.9);   color: #fff; }
+    .status-failed    { background: rgba(180,30,30,0.9);   color: #fff; }
+    .status-abandoned { background: rgba(100,60,10,0.92);  color: #fff; }
+    .project-card-body { padding: 24px; }
+    .project-category {
+      font-family: var(--font-accent);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .project-card h3 { font-size: 1.05rem; color: var(--white); margin-bottom: 10px; line-height: 1.4; }
+    .project-card p  { font-size: 0.88rem; margin-bottom: 20px; }
+    .project-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .project-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Featured */
+    .featured-project {
+      background: linear-gradient(135deg, rgba(80,10,10,0.4), rgba(40,5,5,0.6));
+      border: 1px solid rgba(201,162,39,0.25);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 56px;
+    }
+    .featured-project-img { height: 420px; object-fit: cover; width: 100%; }
+    .featured-badge {
+      background: rgba(180,30,30,0.9);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .featured-project-content { padding: 48px; }
+
+    /* Constitution callout */
+    .constitution-box {
+      background: rgba(201,162,39,0.07);
+      border: 1px solid rgba(201,162,39,0.3);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .constitution-box-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .constitution-box p {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* Impact grid */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .impact-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .impact-card:hover { border-color: rgba(201,162,39,0.35); background: rgba(201,162,39,0.06); }
+    .impact-card-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .impact-card-number { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; color: var(--gold); }
+    .impact-card-label { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 6px; }
+
+    @media (max-width: 768px) {
+      .featured-project-content { padding: 28px; }
+      .impact-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .impact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-badge">MC</div>
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">Maxwell Changilwa Amugune</span>
+        <span class="nav-logo-sub">MCA Aspirant · Kabiro Ward 2027</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="manifesto.html">Manifesto</a>
+      <a href="mjengo-workers.html">Mjengo</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="news.html">Merch</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="volunteer.html" class="btn btn-outline btn-sm">Volunteer</a>
+      <a href="donate.html" class="btn btn-primary btn-sm">Support Campaign</a>
+    </div>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="manifesto.html">Manifesto</a>
+  <a href="mjengo-workers.html">Mjengo Workers</a>
+  <a href="projects.html">Projects</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="news.html">Merch</a>
+  <a href="contact.html">Contact</a>
+  <div class="mobile-menu-cta">
+    <a href="volunteer.html" class="btn btn-outline">Volunteer</a>
+    <a href="donate.html" class="btn btn-primary">Support Campaign</a>
+  </div>
+</div>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="page-hero-bg projects-hero-bg"></div>
+  <div class="container page-hero-content">
+    <p class="page-hero-label">Accountability & Development Agenda</p>
+    <h1 class="page-hero-title">What Was Promised — <span>What Was Delivered</span></h1>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Projects</span>
+    </div>
+  </div>
+</div>
+
+<!-- Intro -->
+<section style="background:linear-gradient(135deg,var(--green-dark),var(--charcoal)); padding:72px 0;">
+  <div class="container">
+    <div class="grid-2" style="gap:64px; align-items:center;">
+      <div class="reveal from-left">
+        <div class="section-label">The Record Must Be Spoken</div>
+        <h2 class="section-title">Kabiro Deserves <span>Accountability.</span></h2>
+        <div class="gold-divider"></div>
+        <p style="margin-bottom:16px;">Maxwell Changilwa Amugune has not yet been elected — and he will never make promises he cannot be held to. What this page documents is the truth: what Kabiro Ward was promised by the current leadership, what was never delivered, and what the Constitution of Kenya guarantees every resident has a right to demand.</p>
+        <p>In 2027, Kabiro will choose a leader who treats public office as a responsibility — not a reward. Every failure listed here is a mandate for change.</p>
+
+        <div class="constitution-box" style="margin-top:28px;">
+          <div class="constitution-box-label">📜 Constitution of Kenya, Article 174</div>
+          <p>"The objects of devolution of government are to promote democratic and accountable exercise of power; to give powers of self-governance to the people and enhance the participation of the people in the exercise of the powers of the State and in making decisions affecting them."</p>
+        </div>
+      </div>
+      <div class="reveal from-right">
+        <div class="impact-grid" style="grid-template-columns:1fr 1fr; margin-top:0;">
+          <div class="impact-card">
+            <div class="impact-card-icon">❌</div>
+            <div class="impact-card-number">0</div>
+            <div class="impact-card-label">Police Posts Built</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">🚱</div>
+            <div class="impact-card-number">0</div>
+            <div class="impact-card-label">Free Water Points Active</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">🏥</div>
+            <div class="impact-card-number">0</div>
+            <div class="impact-card-label">Emergency Ambulances</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">🛣️</div>
+            <div class="impact-card-number">0</div>
+            <div class="impact-card-label">Roads Modernized</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Failure -->
+<section class="section-pad bg-dark">
+  <div class="container">
+    <div class="section-title-block centered reveal">
+      <div class="section-label">The Biggest Failure</div>
+      <h2 class="section-title">What Kabiro Was <span>Promised & Never Got</span></h2>
+      <div class="gold-divider centered"></div>
+    </div>
+
+    <div class="featured-project reveal">
+      <img class="featured-project-img" src="https://scontent.fnbo9-1.fna.fbcdn.net/v/t39.30808-6/701538046_122135491179035197_5963398967683289676_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeHW052wZxOa41mqfrnTNsUDdzA-sNuPiSh3MD6w24-JKGA1Ix4lRMiANd6yT0w3Ul5Zw0Dmhb6z4Mtx36tNgBYw&_nc_ohc=sEkJl41SBTcQ7kNvwFyOOav&_nc_oc=AdqRxjvX55Bk3HkfxwJj_g7AQ_HpGlNYiUqmfnFVMuTZFIyqkfyIxKEn_cs4YS4P28w&_nc_pt=5&_nc_zt=23&_nc_ht=scontent.fnbo9-1.fna&_nc_gid=eb0OscRieQvbg67-rhIyAA&_nc_ss=7b2a8&oh=00_Af6uTwjfE-WxbcpjXkOsaCsdxFJD1fTWkPB6qQwnkF7nPQ&oe=6A16B018" alt="Failed road project Kabiro" loading="lazy" />
+      <div class="featured-project-content">
+        <div class="grid-2" style="gap:48px; align-items:start;">
+          <div>
+            <span class="featured-badge">🚨 Biggest Failure</span>
+            <h2 style="font-size:1.8rem; margin-bottom:16px;">The Roads That Were Never Fixed</h2>
+            <p style="margin-bottom:24px;">For years, Kabiro residents have been told that road repairs are coming. Money has been allocated through county budgets. Promises were made during every election cycle. Yet the roads — including key routes like Salim Road — remain in the same condition or worse. Funds meant for Kabiro infrastructure have not reached the ground.</p>
+            <div class="constitution-box" style="margin-top:0; margin-bottom:24px;">
+              <div class="constitution-box-label">📜 Constitution of Kenya, Article 43(1)(d)</div>
+              <p>"Every person has the right to accessible and adequate housing, and to reasonable standards of sanitation" — this extends to the public infrastructure that connects communities to services, opportunity, and dignity.</p>
+            </div>
+            <div class="point-list">
+              <div class="point-item"><span class="point-check" style="color:#c0392b;">❌</span><span class="point-text">Salim Road — promised for years, still unmaintained and flooded each rainy season</span></div>
+              <div class="point-item"><span class="point-check" style="color:#c0392b;">❌</span><span class="point-text">Solar street lights — budgeted for but never installed or installed and left broken</span></div>
+              <div class="point-item"><span class="point-check" style="color:#c0392b;">❌</span><span class="point-text">Drainage systems — flooding continues in the same spots year after year with no resolution</span></div>
+            </div>
+          </div>
+          <div>
+            <div style="padding:28px; background:rgba(201,162,39,0.07); border:1px solid rgba(201,162,39,0.25); border-radius:var(--radius-md);">
+              <h4 style="color:var(--gold); margin-bottom:14px; font-family:var(--font-heading);">⚖️ What the Law Says</h4>
+              <p style="font-size:0.88rem; color:rgba(255,255,255,0.7); line-height:1.8; margin-bottom:14px;">The Public Finance Management Act requires that county funds be used transparently, for the purposes they were allocated, with measurable outcomes reported to residents. When road funds are allocated but roads remain broken, that is not just a failure of leadership — it may be a violation of law.</p>
+              <p style="font-size:0.88rem; color:rgba(255,255,255,0.7); line-height:1.8;">Maxwell Changilwa Amugune pledges quarterly public accountability forums where every shilling of ward development fund spending is reported openly to Kabiro residents — no exceptions.</p>
+            </div>
+            <div style="margin-top:20px; padding:20px; background:rgba(10,79,42,0.2); border:1px solid rgba(201,162,39,0.2); border-radius:var(--radius-md);">
+              <h4 style="color:var(--gold); margin-bottom:10px; font-family:var(--font-heading);">✅ Maxwell's Pledge</h4>
+              <p style="font-size:0.88rem; color:rgba(255,255,255,0.7); line-height:1.8;">A modernized Salim Road. Full-night solar street lights with no interruptions. Proper drainage across every flooding hotspot. These are not promises — they are the first items on the accountability checklist when Maxwell is elected in 2027.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-bar reveal">
+      <button class="tag active" data-filter-btn="all"            data-filter-group="projects">All Issues</button>
+      <button class="tag"        data-filter-btn="infrastructure" data-filter-group="projects">🛣️ Roads</button>
+      <button class="tag"        data-filter-btn="water"          data-filter-group="projects">💧 Water</button>
+      <button class="tag"        data-filter-btn="health"         data-filter-group="projects">🏥 Health</button>
+      <button class="tag"        data-filter-btn="security"       data-filter-group="projects">🔒 Security</button>
+      <button class="tag"        data-filter-btn="youth"          data-filter-group="projects">🎓 Youth</button>
+      <button class="tag"        data-filter-btn="environment"    data-filter-group="projects">🌿 Sanitation</button>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid-3" id="projectsGrid">
+
+      <!-- SECURITY -->
+      <div class="project-card reveal" data-filter-item="security">
+        <div class="project-card-img">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2C5l2KtvUnNJ-7kIVBm6XzuHedXoF_5fMcA&s" alt="Security failure Kabiro" loading="lazy" />
+          <span class="project-status status-failed">Failed</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">🔒 Security</div>
+          <h3>No Police Posts — Residents Left Unprotected</h3>
+          <p>Kabiro Ward has no operational police post despite persistent insecurity. Phone snatching on motorbikes, theft, and crime continue unchecked. Streetlights were promised as the solution — they were never enough and were never fully delivered.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 29 — Constitution of Kenya</div>
+            <p>"Every person has the right to freedom and security of the person, which includes the right not to be subjected to… violence from either public or private sources."</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell pledges 2 operational police posts</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WATER -->
+      <div class="project-card reveal" data-filter-item="water">
+        <div class="project-card-img">
+          <img src="https://www.shutterstock.com/shutterstock/videos/10813763/thumb/1.jpg" alt="Water failure Kabiro" loading="lazy" />
+          <span class="project-status status-abandoned">Abandoned</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">💧 Water</div>
+          <h3>Free Water Initiative Shut Down by Current Leader</h3>
+          <p>A free water programme at Muslim Primary School was serving Kabiro residents — until the current MCA stopped it. Access to clean water is a constitutional right. Withdrawing a free water service from the poorest residents is a betrayal of public office and of the people.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 43(1)(d) — Constitution of Kenya</div>
+            <p>"Every person has the right to clean and safe water in adequate quantities."</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell will restore & expand free water at 4 locations</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEALTH -->
+      <div class="project-card reveal" data-filter-item="health">
+        <div class="project-card-img">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0p-OhgJS1T0zgWNsRGgdNKsbhZ932-AC-Qg&s" alt="Healthcare failure Kabiro" loading="lazy" />
+          <span class="project-status status-failed">Failed</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">🏥 Healthcare</div>
+          <h3>No Dispensary. No Ambulance. People Dying Needlessly.</h3>
+          <p>Kabiro has no ward-level dispensary with emergency capacity. On Sundays, all private clinics close. When Maxwell nearly died from food poisoning and had to travel kilometres for help, he knew this was not just his crisis — it is every Kabiro resident's crisis, every single day.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 43(1)(a) — Constitution of Kenya</div>
+            <p>"Every person has the right to the highest attainable standard of health, which includes the right to health care services, including reproductive health care."</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell pledges a dispensary + emergency ambulance</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SANITATION -->
+      <div class="project-card reveal" data-filter-item="environment">
+        <div class="project-card-img">
+          <img src="https://www.shutterstock.com/editorial/image-editorial/MbT5Edw3N9jbQ0y3MjMxNzc=/view-dandora-dumpsite-located-outskirts-nairobi-which-1500w-10972894l.jpg" alt="Sanitation Kabiro" loading="lazy" />
+          <span class="project-status status-failed">Failed</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">🌿 Sanitation</div>
+          <h3>Kabiro's Cleanliness Held Hostage by Political Brokers</h3>
+          <p>Kabiro is not dirty because residents do not care — Kabiro is dirty because the current leadership has failed to implement proper, sustainable waste management. Political brokers control waste contracts. Youth who could be employed cleaning their own mtaa are jobless instead.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 42 — Constitution of Kenya</div>
+            <p>"Every person has the right to a clean and healthy environment, which includes the right to have the environment protected for the benefit of present and future generations."</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell pledges TakaSafi TakaKazi — youth-led waste jobs</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDUCATION / BURSARIES -->
+      <div class="project-card reveal" data-filter-item="youth">
+        <div class="project-card-img">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLVzeiied9cLLX1WzO7jfdQ_8czQgRq9YLg&s" alt="Bursary failure Kabiro" loading="lazy" />
+          <span class="project-status status-failed">Failed</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">🎓 Education</div>
+          <h3>Bursaries Captured by Political Networks — Not Students</h3>
+          <p>Bursary funds meant for Kabiro's needy students have been distributed unevenly — favour going to political allies rather than the most deserving residents. Students from the right family or the right political camp get support. Others go without. This is a theft of opportunity from Kabiro's children.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 53(1)(b) — Constitution of Kenya</div>
+            <p>"Every child has the right to free and compulsory basic education." County bursaries exist to ensure no child is denied education due to poverty — not to reward political loyalty.</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell pledges equal bursaries — your voter's card is your pass</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- YOUTH UNEMPLOYMENT -->
+      <div class="project-card reveal" data-filter-item="youth">
+        <div class="project-card-img">
+          <img src="https://ddc514qh7t05d.cloudfront.net/dA/971296408102a0452031194111bc977f/2400w/80q" alt="Youth unemployment Kabiro" loading="lazy" />
+          <span class="project-status status-failed">Failed</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">💼 Youth Empowerment</div>
+          <h3>Youth Handed Mia Mbili Instead of Opportunity</h3>
+          <p>The current system hands young people two hundred shillings during campaigns and calls it empowerment. This culture — fuelled by brokers — has made youth dependent on handouts rather than connected to real jobs, skills, and development. Vijana deserve more than being bought for a day.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 55 — Constitution of Kenya</div>
+            <p>"The State shall take measures, including affirmative action programmes, to ensure that the youth access relevant education and training; have opportunities to associate, be represented and participate in political, social, economic and other spheres of life."</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell pledges sports fields, SACCOs & real job pathways</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPORTS -->
+      <div class="project-card reveal" data-filter-item="youth">
+        <div class="project-card-img">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvownd6knti75Wo5BTVobPOmkb5Cr9LMd7SQ&s" alt="Sports facilities Kabiro" loading="lazy" />
+          <span class="project-status status-abandoned">Abandoned</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">⚽ Sports & Talent</div>
+          <h3>No Modern Football Fields While Kilimani Has Everything</h3>
+          <p>Neighbouring wards like Kilimani have modernized football pitches and youth facilities. Kabiro Primary and Muslim Primary have nothing comparable. Talent goes to waste daily because no one invested in the infrastructure our youth need to grow, compete, and earn a living through sport.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 11 — Constitution of Kenya</div>
+            <p>"The State shall promote all forms of national and cultural expression through literature, the arts, traditional celebrations, science, communication, information, mass media, publications, libraries and other cultural heritage." Sport is part of that expression — and Kabiro's youth deserve their share.</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell pledges modern fields at Kabiro & Muslim Primary</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROADS / STREET LIGHTS -->
+      <div class="project-card reveal" data-filter-item="infrastructure">
+        <div class="project-card-img">
+          <img src="https://img.magnific.com/free-photo/damaged-street-russian-s-war-ukraine_23-2149437945.jpg?semt=ais_hybrid&w=740&q=80" alt="Street lights Kabiro" loading="lazy" />
+          <span class="project-status status-failed">Failed</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">💡 Infrastructure</div>
+          <h3>Street Lights — Promised, Half-Built, Left to Fail</h3>
+          <p>Street lights were promised as a security solution for Kabiro. Some were installed — then left to break, flicker, and go dark with no maintenance plan or accountability. Residents remain unsafe at night. A light that is off is no different from a light that was never there.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 10 — National Values & Principles of Governance</div>
+            <p>"The national values and principles of governance include… good governance, integrity, transparency and accountability." Half-finished public works with no follow-up maintenance violate every one of these values.</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell pledges full-night solar lights — zero interruptions</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MJENGO WORKERS -->
+      <div class="project-card reveal" data-filter-item="infrastructure">
+        <div class="project-card-img">
+          <img src="https://businesstoday.co.ke/wp-content/uploads/2021/06/industrialize.jpg" alt="Mjengo workers Kabiro" loading="lazy" />
+          <span class="project-status status-abandoned">Abandoned</span>
+        </div>
+        <div class="project-card-body">
+          <div class="project-category">👷 Workers Rights</div>
+          <h3>Mjengo Workers — Used, Then Forgotten</h3>
+          <p>Construction workers in Kabiro build Nairobi's skyline without contracts, insurance, fair pay, or any MCA speaking for them in the county assembly. No ward-level leader has ever organized a SACCO, a legal clinic, or an NHIF drive specifically for Kabiro's mjengo community. They have been invisible to leadership — but not to Maxwell.</p>
+          <div class="constitution-box" style="margin-bottom:16px;">
+            <div class="constitution-box-label">📜 Article 41 — Constitution of Kenya</div>
+            <p>"Every person has the right to fair labour practices." This includes every mjengo worker in Kabiro — and an MCA who stays silent while workers are exploited is complicit in that exploitation.</p>
+          </div>
+          <div class="project-meta">
+            <div class="project-meta-item">✅ <span>Maxwell pledges a Mjengo SACCO, NHIF drives & legal clinics</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:linear-gradient(135deg,var(--green-primary),var(--green-dark)); padding:80px 0; text-align:center;">
+  <div class="container reveal">
+    <div class="section-label" style="margin-bottom:20px;">The Reset Starts in 2027</div>
+    <h2 class="section-title" style="max-width:700px; margin:0 auto 20px;">Every Failure Listed Here <span>Becomes a Mandate for Change</span></h2>
+    <p style="max-width:580px; margin:0 auto 40px; color:rgba(255,255,255,0.72); font-size:1.05rem;">Maxwell Changilwa Amugune is not here to make promises — he is here to fix what was broken, restore what was taken, and rebuild systems that serve every Kabiro resident. Your vote in 2027 is your tool. Register today.</p>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+      <a href="manifesto.html" class="btn btn-primary btn-lg">📋 Read the Full Manifesto</a>
+      <a href="volunteer.html" class="btn btn-outline btn-lg">🤝 Join the Movement</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-main"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="footer-logo"><div class="footer-logo-badge">MC</div><div class="nav-logo-text"><span class="nav-logo-name">Maxwell Changilwa Amugune</span><span class="nav-logo-sub">MCA Aspirant · Kabiro Ward 2027</span></div></div><p class="footer-desc">Here to Reset, Restore & Rebuild Kabiro — Bila Political Brokers. Fighting for security, healthcare, water, education and dignity for every resident.</p><div class="footer-social"><a href="#" class="social-icon">📘</a><a href="#" class="social-icon">🐦</a><a href="#" class="social-icon">📸</a><a href="https://wa.me/254700000000" class="social-icon">💬</a></div></div>
+    <div><h4 class="footer-heading">Quick Links</h4><div class="footer-links"><a href="index.html">Home</a><a href="about.html">About Maxwell</a><a href="manifesto.html">Manifesto</a><a href="mjengo-workers.html">Mjengo Workers</a><a href="projects.html">Projects</a></div></div>
+    <div><h4 class="footer-heading">Get Involved</h4><div class="footer-links"><a href="volunteer.html">Volunteer</a><a href="donate.html">Donate</a><a href="gallery.html">Gallery</a><a href="news.html">News</a><a href="contact.html">Contact</a></div></div>
+    <div><h4 class="footer-heading">Contact</h4><div class="footer-contact-item"><span class="footer-contact-icon">📍</span><span>Kabiro Ward, Dagoretti North, Nairobi County</span></div><div class="footer-contact-item"><span class="footer-contact-icon">📞</span><span>+254 700 000 000</span></div><div class="footer-contact-item"><span class="footer-contact-icon">✉️</span><span>info@changilwa2027.ke</span></div><form class="newsletter-form" id="newsletterForm" style="margin-top:16px;"><input class="newsletter-input" type="email" placeholder="Your email" required /><button class="newsletter-btn">Join</button></form></div>
+  </div></div></div>
+  <div class="container"><div class="footer-bottom"><p class="footer-bottom-text">© 2027 Maxwell Changilwa Amugune Campaign. All rights reserved. | Kabiro Ward, Dagoretti North, Nairobi</p><div class="footer-bottom-links"><a href="#">Privacy</a><a href="contact.html">Contact</a></div></div></div>
+</footer>
+
+<a href="https://wa.me/254700000000" class="whatsapp-float">💬</a>
+<button class="scroll-top" id="scrollTop">↑</button>
+<script src="script.js"></script>
+</body>
+</html>
